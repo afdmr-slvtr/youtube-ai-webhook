@@ -105,19 +105,33 @@ def webhook():
         result = call_pc("analyze_channel")
         resp.message(result.get("message", "🔍 Analyzing..."))
 
+    elif incoming == "schedule":
+        result = call_pc("schedule")
+        if "error" in result:
+            resp.message("⚠️ PC offline. Tidak bisa cek jadwal.")
+        else:
+            resp.message(result.get("message", "📅 Schedule OK"))
+
+    elif incoming in ["start", "start all", "mulai"]:
+        result = call_pc("start_services")
+        resp.message(result.get("message",
+            "⚠️ PC offline. Nyalakan PC dulu baru kirim 'start'!"))
+
     elif incoming == "help":
         resp.message(
             "🤖 *YouTube AI Bot Commands*\n\n"
             "*Approval:*\n"
-            "  *1* — ✅ Approve all topics\n"
-            "  *2* — 🔥 Approve HIGH only\n"
-            "  *3* — ❌ Reject plan\n\n"
+            "  *1* ✅ Approve all topics\n"
+            "  *2* 🔥 Approve HIGH only\n"
+            "  *3* ❌ Reject plan\n\n"
             "*Info:*\n"
-            "  *status* — system status\n"
-            "  *queue* — topic queue\n\n"
+            "  *status*   — system status\n"
+            "  *queue*    — topic queue\n"
+            "  *schedule* — jadwal posting\n\n"
             "*Actions:*\n"
             "  *generate* — generate prompt now\n"
-            "  *analyze* — analyze channel now\n"
+            "  *analyze*  — analyze channel\n"
+            "  *start*    — start all services\n"
         )
 
     else:
