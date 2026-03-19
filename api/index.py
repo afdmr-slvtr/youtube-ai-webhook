@@ -117,7 +117,7 @@ def webhook():
         resp.message(result.get("message",
             "⚠️ PC offline. Nyalakan PC dulu baru kirim 'start'!"))
         
-    elif incoming in ["jadwal bulan ini", "monthly schedule", "jadwal"]:
+    elif incoming in ["monthly schedule", "monthly schedule", "jadwal"]:
         result = call_pc("monthly_schedule")
         resp.message(result.get("message", "📅 Loading..."))
 
@@ -145,6 +145,10 @@ def webhook():
         result = call_pc("inbox_status")
         resp.message(result.get("message", "📂 Checking..."))
 
+    elif incoming in ["restart", "restart api", "restart pc"]:
+        result = call_pc("restart")
+        resp.message(result.get("message", "🔄 Restarting..."))
+
     elif incoming == "help":
         resp.message(
             "🤖 *YouTube AI Bot*\n\n"
@@ -156,7 +160,7 @@ def webhook():
             "  *status*          — system status\n"
             "  *queue*           — topic queue\n"
             "  *inbox*           — cek folder inbox\n"
-            "  *jadwal bulan ini*— full schedule\n"
+            "  *monthly schedule*— full schedule\n"
             "  *next*            — jadwal berikutnya\n\n"
             "*Actions:*\n"
             "  *research*        — AI riset topik baru\n"
@@ -165,6 +169,7 @@ def webhook():
             "  *generate*        — generate prompt now\n"
             "  *analyze*         — analisa channel\n"
             "  *skip*            — skip jadwal hari ini\n"
+            "  *restart*         — restart pc_api\n"
             "  *start*           — start all services\n"
         )
     else:
