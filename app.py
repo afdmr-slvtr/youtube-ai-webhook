@@ -129,26 +129,44 @@ def webhook():
         result = call_pc("build_schedule")
         resp.message(result.get("message", "📅 Building..."))
 
+    elif incoming in ["research", "riset", "cari topik"]:
+        result = call_pc("research_topics")
+        resp.message(result.get("message", "🔍 Researching..."))
+
+    elif incoming in ["content plan", "plan", "buat plan"]:
+        result = call_pc("content_plan")
+        resp.message(result.get("message", "🧠 Planning..."))
+
+    elif incoming in ["skip", "skip today", "lewati"]:
+        result = call_pc("skip_today")
+        resp.message(result.get("message", "⏭️ Skipped"))
+
+    elif incoming in ["inbox", "cek inbox"]:
+        result = call_pc("inbox_status")
+        resp.message(result.get("message", "📂 Checking..."))
+
     elif incoming == "help":
         resp.message(
-            "🤖 *YouTube AI Bot Commands*\n\n"
+            "🤖 *YouTube AI Bot*\n\n"
             "*Approval:*\n"
-            "  *1* ✅ Approve all topics\n"
-            "  *2* 🔥 Approve HIGH only\n"
+            "  *1* ✅ Approve all\n"
+            "  *2* 🔥 Approve HIGH\n"
             "  *3* ❌ Reject plan\n\n"
             "*Info:*\n"
-            "  *status*   — system status\n"
-            "  *queue*    — topic queue\n"
-            "  *schedule* — jadwal posting\n\n"
+            "  *status*          — system status\n"
+            "  *queue*           — topic queue\n"
+            "  *inbox*           — cek folder inbox\n"
+            "  *jadwal bulan ini*— full schedule\n"
+            "  *next*            — jadwal berikutnya\n\n"
             "*Actions:*\n"
-            "  *generate* — generate prompt now\n"
-            "  *analyze*  — analyze channel\n"
-            "  *jadwal bulan ini* — full schedule\n"
-            "  *next*            — jadwal berikutnya\n"
+            "  *research*        — AI riset topik baru\n"
+            "  *content plan*    — buat & approve plan\n"
             "  *build schedule*  — buat jadwal baru\n"
-            "  *start*    — start all services\n"
+            "  *generate*        — generate prompt now\n"
+            "  *analyze*         — analisa channel\n"
+            "  *skip*            — skip jadwal hari ini\n"
+            "  *start*           — start all services\n"
         )
-
     else:
         resp.message(
             "🤖 Bot aktif! Kirim *help* untuk commands.\n\n"
