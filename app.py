@@ -116,6 +116,18 @@ def webhook():
         result = call_pc("start_services")
         resp.message(result.get("message",
             "⚠️ PC offline. Nyalakan PC dulu baru kirim 'start'!"))
+        
+    elif incoming in ["jadwal bulan ini", "monthly schedule", "jadwal"]:
+        result = call_pc("monthly_schedule")
+        resp.message(result.get("message", "📅 Loading..."))
+
+    elif incoming in ["next", "jadwal berikutnya", "next schedule"]:
+        result = call_pc("next_schedule")
+        resp.message(result.get("message", "📅 Loading..."))
+
+    elif incoming in ["build schedule", "buat jadwal"]:
+        result = call_pc("build_schedule")
+        resp.message(result.get("message", "📅 Building..."))
 
     elif incoming == "help":
         resp.message(
@@ -131,6 +143,9 @@ def webhook():
             "*Actions:*\n"
             "  *generate* — generate prompt now\n"
             "  *analyze*  — analyze channel\n"
+            "  *jadwal bulan ini* — full schedule\n"
+            "  *next*            — jadwal berikutnya\n"
+            "  *build schedule*  — buat jadwal baru\n"
             "  *start*    — start all services\n"
         )
 
